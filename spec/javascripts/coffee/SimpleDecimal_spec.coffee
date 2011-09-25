@@ -58,8 +58,8 @@ describe "SimpleDecimal", ->
     ans = @d.add _d('123')
     assert_decimal ans, '246.45'
 
-  it "should sub two of different lengths", ->
-    ans = @d.sub _d('0.0001')
+  it "should subtract two of different lengths", ->
+    ans = @d.subtract _d('0.0001')
     assert_equal ans.intval, 1234499
     assert_equal ans.scale, 4
     assert_decimal ans, '123.4499'

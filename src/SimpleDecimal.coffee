@@ -14,7 +14,7 @@
     ans.scale = @matchScales(a,b)
     ans.intval = a.intval + b.intval
     ans
-  sub: (a,b) ->
+  subtract: (a,b) ->
     ans = new SimpleDecimal()
     ans.scale = @matchScales(a,b)
     ans.intval = a.intval - b.intval
@@ -54,5 +54,5 @@ class @SimpleDecimal
 
   add: (other) ->
     DecimalMath.add(@, other)
-  sub: (other) ->
-    DecimalMath.sub(@, other)
+  subtract: (other) ->
+    DecimalMath.subtract(@, other)
