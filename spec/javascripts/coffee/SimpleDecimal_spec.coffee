@@ -33,9 +33,16 @@ describe "SimpleDecimal", ->
     assert_decimal @d, '12345'
 
   it "should work for weird numbers", ->
-    assert_decimal _d('0000.0001'), '0000.0001'
-    assert_decimal _d('.0001'), '.0001'
-    assert_decimal _d('0123.0001'), '0123.0001'
+    assert_decimal _d('0000.0001'), '0.0001'
+    assert_decimal _d('.0001'), '0.0001'
+    assert_decimal _d('123.0001'), '123.0001'
+
+  it "should work for negative numbers", ->
+    assert_decimal _d('-123'), '-123'
+    assert_decimal _d('-123.00'), '-123'
+    assert_decimal _d('-0000.0001'), '-0.0001'
+    assert_decimal _d('-.0001'), '-0.0001'
+    assert_decimal _d('-123.0001'), '-123.0001'
 
   it "should increase scale", ->
     @d.setScale(5)
@@ -64,6 +71,25 @@ describe "SimpleDecimal", ->
     assert_equal ans.scale, 4
     assert_decimal ans, '123.4499'
 
+  it "should result in a negative", ->
+    assert_decimal _d('100.12').subtract(_d('200.00')), '-99.88'
+
+  it "should add positive to negatives", ->
+    assert_decimal _d('-123.45').add(_d('100.1')), '-23.35'
+    assert_decimal _d('-123.45').add(_d('150.123')), '26.673'
+
+  it "should add negatives to positives", ->
+    assert_decimal _d('123.45').add(_d('-100.1')), '23.35'
+    assert_decimal _d('123.45').add(_d('-150.123')), '-26.673'
+
+  it "should subtract positive from negatives", ->
+    assert_decimal _d('-123.45').subtract(_d('100.1')), '-223.55'
+    assert_decimal _d('-123.45').subtract(_d('150.123')), '-273.573'
+
+  it "should subtract negatives from positives", ->
+    assert_decimal _d('123.45').subtract(_d('-100.1')), '223.55'
+    assert_decimal _d('123.45').subtract(_d('-150.123')), '273.573'
+    
   it "should repeat a lot", ->
     for i in [1..100000]
       do (i) ->
