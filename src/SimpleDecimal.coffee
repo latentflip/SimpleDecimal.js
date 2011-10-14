@@ -48,6 +48,8 @@ class @SimpleDecimal
     str = str[0...intlength] + '.' + str[intlength..str.length]
     str = '-'+str if @isNegative()
     str
+  toFloat: ->
+    parseFloat(@toString())
 
   setScale: (newScale) ->
     growth = newScale - @scale
@@ -64,3 +66,11 @@ class @SimpleDecimal
     DecimalMath.add(@, other)
   subtract: (other) ->
     DecimalMath.subtract(@, other)
+
+  invert: ->
+    DecimalMath.subtract(new SimpleDecimal('0'), @)
+  clone: ->
+    DecimalMath.add(new SimpleDecimal('0'), @)
+  abs: ->
+    return @invert() if @isNegative()
+    return @clone()

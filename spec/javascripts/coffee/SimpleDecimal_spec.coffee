@@ -94,4 +94,14 @@ describe "SimpleDecimal", ->
     for i in [1..100000]
       do (i) ->
         _d('2.34').add _d('1.23')
+    
+  it "should abs numbers", ->
+    assert_decimal _d('-123.45').abs(), '123.45'
+    assert_decimal _d('123.45').abs(), '123.45'
 
+  it "should invert numbers", ->
+    assert_decimal _d('123.45').invert(), '-123.45'
+    assert_decimal _d('-123.45').invert(), '123.45'
+  
+  it "should convert to floats", ->
+    assert_equal _d('123.45').toFloat(), 123.45
