@@ -35,6 +35,8 @@ class @SimpleDecimal
       @intval = parseInt (parts[0] + parts[1]), 10
       @precision = @precision - 1 if @isNegative()
   
+  valueOf: ->
+    @toFloat()
   toJSON: ->
     @toString()
   toString: ->

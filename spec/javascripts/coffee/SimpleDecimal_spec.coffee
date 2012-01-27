@@ -105,3 +105,12 @@ describe "SimpleDecimal", ->
   
   it "should convert to floats", ->
     assert_equal _d('123.45').toFloat(), 123.45
+
+
+  it "should compare numbers using their float values", ->
+    assert _d('100') > _d('20')
+    assert _d('-10') < _d('-2')
+    assert _d('-10') > _d('-20')
+    assert _d('-1') < _d('2')
+
+
