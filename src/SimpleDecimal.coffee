@@ -26,41 +26,26 @@ class @SimpleDecimal
       cleanstring = parseFloat(stringval).toString()
       parts = cleanstring.split '.'
       if parts.length == 1
-        @precision = parts[0].length
         @scale = 0
       else
         @scale = parts[1].length
-        @precision = parts[0].length + parts[1].length
 
       @intval = parseInt (parts[0] + parts[1]), 10
-      @precision = @precision - 1 if @isNegative()
   
   valueOf: ->
     @toFloat()
   toJSON: ->
     @toString()
   toString: ->
-    str = "#{@intval}"
-    return str if @scale == 0
-
-    str = str[1...str.length] if @isNegative()
-
-    if @precision > str.length
-      str = new Array(@precision-str.length+1).join('0')+str
-    
-    intlength = str.length - @scale
-    str = str[0...intlength] + '.' + str[intlength..str.length]
-    str = '-'+str if @isNegative()
-    str
+    @toFloat().toFixed(@scale)
   toFloat: ->
-    parseFloat(@toString())
+    @intval * Math.pow(10, -1 * @scale)
 
   setScale: (newScale) ->
     growth = newScale - @scale
     if growth > 0
       @intval = @intval * Math.pow(10,growth)
       @scale = newScale
-      @precision = @precision + growth
 
   isNegative: () ->
     @intval < 0
